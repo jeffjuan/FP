@@ -1,0 +1,141 @@
+﻿@model FP.CORE.Models.UserPermissionView
+@{
+    ViewBag.Title = "使用者權限設定";
+    var i = 1;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">使用者權限設定</h1>
+    </div>
+</div>
+@using (Html.BeginForm("PermissionPost", "User", FormMethod.Post))
+{
+    <table class="table table-striped">
+        <tr>
+            <th style="width:30px">#</th>
+            <th style="width:250px">作業名稱</th>
+            <th>權限角色</th>
+        </tr>
+        @foreach (var feature in Model.Features)
+        {
+            @*第一層*@
+        if (string.IsNullOrEmpty(@feature.PARENT))
+        {
+            <tr>
+                <td>@i</td>
+                <td><b>@feature.NAME</b></td>
+                <td>
+                    @foreach (var role in Model.Roles)
+                    {
+                        @*已設定的權限*@
+                        <input id="@(feature.CODE)_@(role.ROLECODE)"
+                               onclick="getData(this,'@(feature.CODE)_@(role.ROLECODE)')"
+                               type="checkbox" name="@role.ID.ToString()" @(CheckRole(feature.CODE) == role.ROLECODE ? "checked" : "") /> @role.NAME <span>&nbsp;&nbsp;</span>
+                    }
+                </td>
+            </tr>
+            i++;
+        }
+        else
+        { @*第二層*@
+            <tr>
+                <td></td>
+                <td>&nbsp;&nbsp;&nbsp; <b>-</b> @feature.NAME</td>
+                <td>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <input id="@(feature.CODE)_@(role.ROLECODE)"
+                               onclick="getData(this,'@(feature.CODE)_@(role.ROLECODE)')"
+                               type="checkbox" name="@role.ID.ToString()" @(CheckRole(feature.CODE) == role.ROLECODE ? "checked" : "") /> @role.NAME <span>&nbsp;&nbsp;</span>
+                    }
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <hr />
+    <input type="submit" class="btn btn-info" value="儲存" /><br /><br />
+    @Html.Hidden("Feature_Role")
+    @Html.HiddenFor(x => Model.UserID)
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        var tmpId=[];
+
+        $(function() {
+            // Scan DOM，取出已勾選的角色 id，塞入 tmpId 陣列
+            var htmlElement = $("input:checked");
+            for(var i = 0; i < htmlElement.length; i++)
+            {
+                if(htmlElement[i].getAttribute("id") != "ENABLE")
+                {
+                    tmpId.push(htmlElement[i].getAttribute("id"));
+                }
+            }
+            $("#Feature_Role").val(tmpId);
+        });
+
+       // 控制功能區的單選
+       function getData(e,roleid)
+       {
+           // 第一次點選
+           if(tmpId == "")
+           {
+               tmpId.push(roleid);
+               return;
+           }
+           //alert("初始="+tmpId);
+           // 檢查tmpId array內是否有點選的roleid
+           var index = tmpId.indexOf(roleid);
+           //alert("指標="+index);
+           if(index > -1 ) // 有，表示重複點選
+           {
+               e.checked = false;
+               tmpId.splice(index, 1); // 移除陣列內的特定值
+               //alert("移除後值=" + tmpId);
+
+           }else // 無，非重複點選
+           {
+               //var preCode_roleid = roleid.substring(0,4);  // 取出點選CheckBox值前四碼
+               var preCode_roleid = roleid.match(/\d+/); //100_1取100
+
+               // 以迴圈檢查 點選的 cb 同功能區是否已有點選，如果有會移除舊的
+               for(var i = 0; i < tmpId.length; i++) // 以該碼檢查 tmpId 是否有
+               {
+                   //var tmpCode = tmpId[i].substring(0, 4);
+                   var tmpCode = tmpId[i].match(/\d+/); //100_1取100
+                   if(preCode_roleid == tmpCode) // 表相同功能區
+                   {
+                       var preRoleid = tmpId[i];                // 取出 roleid
+                       $("#"+preRoleid).attr('checked', false); // 取消選取
+                       tmpId.splice(i,1); // 移除陣列內該值
+                   }
+               }
+
+               $("#"+roleid).attr('checked', true); // 選取
+               tmpId.push(roleid);                  // 加入新值
+           }
+          //alert("最後值=" + tmpId);
+           $("#Feature_Role").val(tmpId);       // 塞入隱藏欄位
+       }
+
+    </script>
+}
+
+@functions
+{
+    public string CheckRole(string feature)
+    {
+        var roleCode = (from a in Model.User_Feature_Role
+                     where a.FEATURE_CODE == feature
+                     select a.ROLE_CODE).FirstOrDefault();
+        return roleCode;
+    }
+}

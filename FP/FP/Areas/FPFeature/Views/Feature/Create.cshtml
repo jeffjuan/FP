@@ -1,0 +1,78 @@
+﻿@model FP.CORE.Models.FP_FEATURE
+@{
+    ViewBag.Title = "新增作業項目";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">新增作業項目</h1>
+    </div>
+</div>
+@using (Html.BeginForm("CreatePost", "Feature", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>作業代碼</label>
+                @Html.TextBoxFor(m => m.CODE, new { @class = "form-control", @maxlength = "4" })
+                <p class="help-block">*必填，限四字元</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>作業名稱</label>
+                @Html.TextBoxFor(m => m.NAME, new { @class = "form-control", @maxlength = "25" })
+                <p class="help-block">*必填</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>控制器名稱</label>
+                @Html.TextBoxFor(m => m.CONTROLLER, new { @class = "form-control", @maxlength = "40" })
+                <p class="help-block" style="color:cornflowerblue">Controller Name</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>權限</label>
+                @Html.TextBoxFor(m => m.PERMISSION, new { @class = "form-control" })
+                <p class="help-block">空白表示無權限</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>父節點代碼</label>
+                @Html.TextBoxFor(m => m.PARENT, new { @class = "form-control" })
+                <p class="help-block" style="color:cornflowerblue">空白表示為父節點</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>網址</label>
+                @Html.TextBoxFor(m => m.URL, new { @class = "form-control" })
+                <p class="help-block"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-info" value="新增" />
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

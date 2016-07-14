@@ -1,0 +1,67 @@
+﻿@model IPagedList<FP.CORE.Models.FP_DEPARTMENT>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "部門表列";
+    var pageData = "";
+    if (Model != null)
+    {
+        pageData = string.Format("每頁筆數：{0} ~ {1}, 共 {2} 筆",
+        Model.FirstItemOnPage,
+        Model.LastItemOnPage, Model.TotalItemCount);
+    }
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">部門表列</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="background-color:#f4f4f4;height:50px;padding-top:8px">
+        <div>
+            @Html.ActionLink("新增部門項目", "Create", "Department", null, new { @class = "btn btn-info" })
+        </div>
+    </div>
+</div>
+<br />
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>代碼</th>
+                        <th>名稱</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.Raw(item.CODE)</td>
+                            <td>@Html.Raw(item.NAME)</td>
+                            <td>
+                                @Html.ActionLink("修改", "Edit", "Department", new { id = item.ID }, new { @class = "btn btn-warning" }) &nbsp;
+                                @Html.ActionLink("刪除", "Delete", "Department", new { id = item.ID }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-sm-12 pagination-sm">
+        共 @Model.PageCount 頁 , @pageData
+    </div>
+
+}

@@ -1,0 +1,62 @@
+﻿@model FP.CORE.Models.FP_USER
+@{
+    ViewBag.Title = "使用者明細";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">使用者明細</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ACCOUNT)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ACCOUNT)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CNAME)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CNAME)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ENAME)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ENAME)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CODE)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CODE)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.EMAIL)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EMAIL)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DEPARTMENTCODE)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DEPARTMENTCODE)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ENABLE)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ENABLE)
+            </dd>
+        </dl>
+    </div>
+</div>
+<hr />
+@Html.ActionLink("回使用者列表","Index",null,new { @class="btn btn-default"})
+

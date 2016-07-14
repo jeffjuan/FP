@@ -1,0 +1,76 @@
+﻿@model FP.CORE.Models.FP_USER
+@{
+    Layout = null;
+    ViewBag.Title = "登入系統";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入系統</title>
+
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- SBADMIN V2-->
+    <link href="~/Content/SBAdmin2/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/SBAdmin2/metisMenu.min.css" rel="stylesheet">
+    <link href="~/Content/SBAdmin2/sb-admin-2.css" rel="stylesheet">
+    <link href="~/Content/SBAdmin2/font-awesome/font-awesome.min.css" rel="stylesheet">
+
+    @Styles.Render("~/Content/css")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body style="background-color:#cdcdcd">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">登入系統</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("LogInPost", "User"))
+                        {
+
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(item => Model.ACCOUNT, new { @class = "form-control", @placeholder = "帳號", @autofocus = "autofocus" })
+                                    @Html.ValidationMessageFor(item => Model.ACCOUNT, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(item => Model.PW, new { @class = "form-control", @placeholder = "密碼", @type = "password" })
+                                    @Html.ValidationMessageFor(item => Model.PW, "", new { @class = "text-danger" })
+
+                                </div>
+                                <!--
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">記住我
+                                    </label>
+                                </div>
+                                    -->
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="登入" />
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<!--SBADMIN V2-->
+<script src="~/Scripts/metisMenu.min.js"></script>
+<script src="~/Scripts/sb-admin-2.js"></script>

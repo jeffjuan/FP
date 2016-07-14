@@ -1,0 +1,104 @@
+﻿@model FP.CORE.Models.UserView
+@{
+    ViewBag.Title = "編輯使用者";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">編輯使用者</h1>
+    </div>
+</div>
+@using (Html.BeginForm("EditPost", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>帳號：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.ACCOUNT, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.ACCOUNT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>中文姓名：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.CNAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.CNAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>英文姓名：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.ENAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.ENAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>員工編號：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.CODE, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.CODE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>密碼：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.PW, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.PW, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+           
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>Email：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.User.EMAIL, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.User.EMAIL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>部門：</b></div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(item => Model.User.DEPARTMENTCODE, Model.Department, new { @class = "form-control" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>啟用：</b></div>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(item => Model.User.ENABLE, new { @style = "width:15px;height:15px" }) 
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+
+    <hr />
+    <input type="submit" class="btn btn-info" value="送出" /><br />
+    @Html.HiddenFor(a=>a.User.ID)
+    @Html.HiddenFor(a => a.User.USERNO)
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

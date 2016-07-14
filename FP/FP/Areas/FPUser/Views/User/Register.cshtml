@@ -1,0 +1,111 @@
+﻿@model FP.CORE.Models.FP_USER
+@{
+    ViewBag.Title = "註冊使用者";
+    IEnumerable<SelectListItem> department = ViewBag.Department;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">註冊使用者</h1>
+    </div>
+</div>
+@using (Html.BeginForm("RegisterPost", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>帳號：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.ACCOUNT, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.ACCOUNT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>中文姓名：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.CNAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.CNAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>英文姓名：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.ENAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.ENAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>員工編號：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.CODE, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.CODE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>密碼：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.PW, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.PW, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>再次確認密碼：</b></div>
+                <div class="col-md-10">
+                    
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>Email：</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(item => Model.EMAIL, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(item => Model.EMAIL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>部門：</b></div>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(item => Model.DEPARTMENTCODE, department, new { @class = "form-control" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><b>啟用：</b></div>
+                <div class="col-md-10">
+                    @Html.CheckBox("ENABLE", false, new { @style = "width:15px;height:15px" })
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+
+    <hr />
+    <input type="submit" class="btn btn-info" value="送出" /><br />
+    @Html.Hidden("RoleId", null, new { @id = "roleId" })
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

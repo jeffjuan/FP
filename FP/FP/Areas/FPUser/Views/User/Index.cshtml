@@ -1,0 +1,83 @@
+﻿@model IPagedList<FP.CORE.Models.FP_USER>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "使用者表列";
+    var pageData = "";
+    if (Model != null)
+    {
+        pageData = string.Format("每頁筆數：{0} ~ {1}, 共 {2} 筆",
+        Model.FirstItemOnPage,
+        Model.LastItemOnPage, Model.TotalItemCount);
+     }
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">使用者表列</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="background-color:#f4f4f4;height:50px;padding-top:8px">
+        <div>
+            @Html.ActionLink("新增使用者", "Register", "User", null, new { @class = "btn btn-info" })
+        </div>
+    </div>
+</div>
+<br />
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>員工編號</th>
+                        <th>帳號</th>
+                        <th>姓名</th>
+                        <th>部門</th>
+                        <th>狀態</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.Raw(item.CODE)</td>
+                            <td>@Html.Raw(item.ACCOUNT)</td>
+                            <td>@Html.Raw(item.CNAME)</td>
+                            <td>@Html.Raw(item.DEPARTMENTCODE)</td>
+                            <td>
+                                @{
+                                    string txt = "停用";
+                                    if ((bool)item.ENABLE) { txt = "啟用"; }
+                                }
+                                @txt
+                            </td>
+                            <td>
+                                @Html.ActionLink("明細", "Detail", "User", new { id = item.ID }, new { @class = "btn btn-default" }) &nbsp;
+                                @Html.ActionLink("修改", "Edit", "User", new { id = item.ID }, new { @class = "btn btn-success" }) &nbsp;
+                                @Html.ActionLink("權限設定", "Permission", "User", new { id = item.ID }, new { @class = "btn btn-warning" }) &nbsp;
+                                @Html.ActionLink("刪除", "Delete", "User", new { id = item.ID }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-sm-12 pagination-sm">
+        共 @Model.PageCount 頁 , @pageData
+    </div>
+
+}
+
+

@@ -1,0 +1,53 @@
+﻿@model FP.CORE.Models.FP_DEPARTMENT
+@{
+    ViewBag.Title = "編輯部門";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">編輯部門項目</h1>
+    </div>
+</div>
+@using (Html.BeginForm("EditPost", "Department", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>部門代碼</label>
+                @Html.TextBoxFor(m => m.CODE, new { @class = "form-control", @maxlength = "5" })
+                <p class="help-block">*必填，限五字元</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>部門名稱</label>
+                @Html.TextBoxFor(m => m.NAME, new { @class = "form-control", @maxlength = "25" })
+                <p class="help-block">*必填</p>
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-info" value="儲存" />
+        </div>
+    </div>
+
+    @Html.HiddenFor(m=>m.ID)
+
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
